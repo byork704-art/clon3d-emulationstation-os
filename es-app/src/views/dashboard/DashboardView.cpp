@@ -420,8 +420,9 @@ void DashboardView::renderBackground(const Transform4x4f& trans,
     }
 
     // Subtle gradient overlay so artwork always reads well.
-    unsigned int gradTop = (0x00000000) | (unsigned char)(alpha * 0.0f);
-    unsigned int gradBot = (0x00000000) | (unsigned char)(alpha * 0.55f);
+    // Top is fully transparent; bottom darkens to ~55% of current alpha.
+    unsigned int gradTop = 0x00000000;
+    unsigned int gradBot = 0x00000000 | (unsigned char)(alpha * 0.55f);
     Renderer::drawRect(0.0f, 0.0f, mScreenW, mContentH,
         gradTop, gradBot, false); // vertical gradient
 }
@@ -469,8 +470,8 @@ void DashboardView::renderInfoPanel(const Transform4x4f& trans,
 {
     Renderer::setMatrix(trans);
 
-    // Semi-transparent panel background.
-    unsigned int panelBg = (unsigned char)(alpha * 0.45f);
+    // Semi-transparent panel background (black, 45% of current alpha).
+    unsigned int panelBg = 0x00000000 | (unsigned char)(alpha * 0.45f);
     Renderer::drawRect(mInfoPanelX, 0.0f, mInfoPanelW, mContentH,
         panelBg, panelBg);
 

@@ -82,7 +82,6 @@ void HudOverlay::onSystemChanged(SystemData* system)
     // Count visible systems.
     mSystemTotal = 0;
     mSystemIndex = 0;
-    int idx = 0;
     for (auto* s : SystemData::sSystemVector)
     {
         if (s->isVisible())
@@ -91,7 +90,6 @@ void HudOverlay::onSystemChanged(SystemData* system)
                 mSystemIndex = mSystemTotal + 1;
             ++mSystemTotal;
         }
-        ++idx;
     }
 
     std::string label = std::to_string(mSystemIndex) + " / " + std::to_string(mSystemTotal);
