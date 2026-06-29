@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Clon3D Default Theme — theme.xml
+  ================================
+  This is the reference theme for the Clon3D Cyberdeck OS.
+  It demonstrates all new Clon3D format version 2 features.
+
+  To use this theme, set "themePath" in settings.json to the path of
+  the directory containing this file.
+
+  All position / size values are normalised (0.0 – 1.0 relative to screen).
+-->
+<theme>
+  <!-- Format version 2 enables Clon3D theme-controlled rendering. -->
+  <formatVersion>2</formatVersion>
+
+  <!-- =====================================================================
+       System View
+       =====================================================================
+       Defines every component rendered in the system-selection screen.
+       Components are drawn in document order (first = bottom layer).
+  -->
+  <systemView>
+
+    <!-- Background image (full screen) -->
+    <image name="background">
+      <path>./images/background.png</path>
+      <pos x="0.0" y="0.0" />
+      <size w="1.0" h="1.0" />
+      <color r="255" g="255" b="255" a="255" />
+      <opacity>1.0</opacity>
+    </image>
+
+    <!-- Main carousel — fully theme-controlled -->
+    <carousel name="systemCarousel">
+      <!-- horizontal or vertical -->
+      <orientation>horizontal</orientation>
+
+      <!-- Position and size (normalised) -->
+      <pos x="0.0" y="0.28" />
+      <size w="1.0" h="0.44" />
+
+      <!-- Item scaling: selected item is 1.3× the size of non-selected items -->
+      <itemScale>1.3</itemScale>
+
+      <!-- Normalised horizontal gap between logo centres -->
+      <itemSpacing>0.22</itemSpacing>
+
+      <!-- Logo size relative to carousel height -->
+      <logoScale>0.55</logoScale>
+
+      <!-- Selector background behind the active item.
+           Set selectorVisible to false to hide the white box. -->
+      <selectorVisible>true</selectorVisible>
+      <selectorColor r="255" g="255" b="255" a="180" />
+
+      <!-- Scroll animation duration in seconds -->
+      <animationDuration>0.25</animationDuration>
+
+      <!-- Wrap from last system back to first -->
+      <wrapAround>true</wrapAround>
+
+      <!-- Maximum simultaneously rendered items (for performance) -->
+      <maxVisibleItems>7</maxVisibleItems>
+    </carousel>
+
+    <!-- System name text (shown below carousel) -->
+    <text name="systemName">
+      <pos x="0.0" y="0.74" />
+      <size w="1.0" h="0.08" />
+      <value>{system.fullname}</value>
+      <color r="230" g="230" b="230" a="255" />
+      <fontSize>0.055</fontSize>
+      <alignment>center</alignment>
+    </text>
+
+    <!-- Game count -->
+    <text name="gameCount">
+      <pos x="0.0" y="0.82" />
+      <size w="1.0" h="0.05" />
+      <value>{system.gameCount} games</value>
+      <color r="170" g="170" b="170" a="200" />
+      <fontSize>0.035</fontSize>
+      <alignment>center</alignment>
+    </text>
+
+    <!-- Status bar (top of screen: clock, battery etc.) -->
+    <statusbar name="clock">
+      <pos x="0.0" y="0.0" />
+      <size w="1.0" h="0.06" />
+      <value>{time.hhmm}</value>
+      <color r="255" g="255" b="255" a="200" />
+      <fontSize>0.035</fontSize>
+      <alignment>right</alignment>
+    </statusbar>
+
+    <!-- Overlay: decorative gradient bar above the carousel -->
+    <overlay name="carouselGradient">
+      <path>./images/gradient_overlay.png</path>
+      <pos x="0.0" y="0.25" />
+      <size w="1.0" h="0.52" />
+      <opacity>0.6</opacity>
+    </overlay>
+
+    <!-- Navigation hint panel (bottom of screen) -->
+    <navigation name="hints">
+      <pos x="0.0" y="0.92" />
+      <size w="1.0" h="0.08" />
+
+      <text name="acceptHint">
+        <pos x="0.6" y="0.0" />
+        <size w="0.2" h="1.0" />
+        <value>A — Select</value>
+        <color r="200" g="200" b="200" a="200" />
+        <fontSize>0.03</fontSize>
+      </text>
+
+      <text name="backHint">
+        <pos x="0.8" y="0.0" />
+        <size w="0.2" h="1.0" />
+        <value>B — Back</value>
+        <color r="200" g="200" b="200" a="200" />
+        <fontSize>0.03</fontSize>
+      </text>
+    </navigation>
+
+  </systemView>
+
+  <!-- =====================================================================
+       Game List View (stub — full layout defined in Stage 2)
+  =====================================================================-->
+  <gamelistView>
+    <image name="background">
+      <path>./images/background.png</path>
+      <pos x="0.0" y="0.0" />
+      <size w="1.0" h="1.0" />
+    </image>
+  </gamelistView>
+
+</theme>
