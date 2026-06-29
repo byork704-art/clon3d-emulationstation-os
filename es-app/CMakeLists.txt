@@ -55,6 +55,11 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/ViewController.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/UIModeController.h
 
+    # Dashboard (Clon3D Cyberdeck OS)
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/dashboard/DashboardWidget.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/dashboard/HudOverlay.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/dashboard/DashboardView.h
+
     # Animations
     ${CMAKE_CURRENT_SOURCE_DIR}/src/animations/LaunchAnimation.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/animations/MoveCameraAnimation.h
@@ -113,6 +118,11 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/SystemView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/ViewController.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/UIModeController.cpp
+
+    # Dashboard (Clon3D Cyberdeck OS)
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/dashboard/DashboardWidget.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/dashboard/HudOverlay.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/dashboard/DashboardView.cpp
 )
 
 #-------------------------------------------------------------------------------

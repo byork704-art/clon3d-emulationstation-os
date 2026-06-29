@@ -79,6 +79,10 @@ void Settings::setDefaults()
 	mBoolMap["QuickSystemSelect"] = true;
 	mBoolMap["MoveCarousel"] = true;
 
+	// Clon3D Cyberdeck OS: enable the fullscreen dashboard system-select view.
+	// When false (default) the legacy EmulationStation carousel is used.
+	mBoolMap["DashboardMode"] = false;
+
 	mBoolMap["ThreadedLoading"] = false;
 
 	mBoolMap["Debug"] = false;

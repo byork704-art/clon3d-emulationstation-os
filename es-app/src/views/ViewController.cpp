@@ -9,6 +9,7 @@
 #include "views/gamelist/IGameListView.h"
 #include "views/gamelist/GridGameListView.h"
 #include "views/gamelist/VideoGameListView.h"
+#include "views/dashboard/DashboardView.h"
 #include "views/SystemView.h"
 #include "views/UIModeController.h"
 #include "FileFilterIndex.h"
@@ -99,11 +100,22 @@ void ViewController::goToSystemView(SystemData* system)
 	mState.viewing = SYSTEM_SELECT;
 	mState.system = system;
 
-	auto systemList = getSystemListView();
-	systemList->setPosition(getSystemId(system) * (float)Renderer::getScreenWidth(), systemList->getPosition().y());
+	if (Settings::getInstance()->getBool("DashboardMode"))
+	{
+		// ── Clon3D dashboard mode ─────────────────────────────────────────
+		auto dashboard = getDashboardView();
+		dashboard->goToSystem(system, false);
+		mCurrentView = dashboard;
+	}
+	else
+	{
+		// ── Legacy carousel mode ──────────────────────────────────────────
+		auto systemList = getSystemListView();
+		systemList->setPosition(getSystemId(system) * (float)Renderer::getScreenWidth(), systemList->getPosition().y());
+		systemList->goToSystem(system, false);
+		mCurrentView = systemList;
+	}
 
-	systemList->goToSystem(system, false);
-	mCurrentView = systemList;
 	mCurrentView->onShow();
 	PowerSaver::setState(true);
 
@@ -424,6 +436,18 @@ std::shared_ptr<SystemView> ViewController::getSystemListView()
 	return mSystemListView;
 }
 
+std::shared_ptr<DashboardView> ViewController::getDashboardView()
+{
+	if (mDashboardView)
+		return mDashboardView;
+
+	mDashboardView = std::shared_ptr<DashboardView>(new DashboardView(mWindow));
+	addChild(mDashboardView.get());
+	// Dashboard is always at the origin — it owns its own fullscreen layout.
+	mDashboardView->setPosition(0.0f, 0.0f);
+	return mDashboardView;
+}
+
 
 bool ViewController::input(InputConfig* config, Input input)
 {
@@ -472,8 +496,16 @@ void ViewController::render(const Transform4x4f& parentTrans)
 	// Keep track of UI mode changes.
 	UIModeController::getInstance()->monitorUIMode();
 
-	// draw systemview
-	getSystemListView()->render(trans);
+	// Render the system-select view — either the Clon3D dashboard or the
+	// legacy carousel, depending on the DashboardMode setting.
+	if (Settings::getInstance()->getBool("DashboardMode"))
+	{
+		getDashboardView()->render(parentTrans); // dashboard uses its own matrix
+	}
+	else
+	{
+		getSystemListView()->render(trans);
+	}
 
 	// draw gamelists
 	for(auto it = mGameListViews.cbegin(); it != mGameListViews.cend(); it++)
@@ -584,9 +616,10 @@ void ViewController::reloadAll(bool themeChanged)
 		}
 	}
 
-	// Rebuild SystemListView
+	// Rebuild SystemListView and DashboardView
 	mSystemListView.reset();
 	getSystemListView();
+	mDashboardView.reset();
 
 	// update mCurrentView since the pointers changed
 	if(mState.viewing == GAME_LIST)

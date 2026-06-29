@@ -7,6 +7,7 @@
 #include "GuiComponent.h"
 #include <vector>
 
+class DashboardView;
 class IGameListView;
 class SystemData;
 class SystemView;
@@ -84,7 +85,14 @@ public:
 	virtual HelpStyle getHelpStyle() override;
 
 	std::shared_ptr<IGameListView> getGameListView(SystemData* system);
+
+	// Returns the legacy carousel-based system list view.
 	std::shared_ptr<SystemView> getSystemListView();
+
+	// Returns the Clon3D fullscreen dashboard view.
+	// Created on first call; only used when DashboardMode setting is true.
+	std::shared_ptr<DashboardView> getDashboardView();
+
 	void removeGameListView(SystemData* system);
 
 private:
@@ -96,7 +104,8 @@ private:
 
 	std::shared_ptr<GuiComponent> mCurrentView;
 	std::map< SystemData*, std::shared_ptr<IGameListView> > mGameListViews;
-	std::shared_ptr<SystemView> mSystemListView;
+	std::shared_ptr<SystemView>    mSystemListView;
+	std::shared_ptr<DashboardView> mDashboardView;   // Clon3D dashboard
 
 	Transform4x4f mCamera;
 	float mFadeOpacity;
